@@ -11,7 +11,7 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 
-import { StatusBarHeight } from "../../components";
+import { StatusBarHeight } from "../../config/components";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -36,13 +36,13 @@ export default function Login() {
 
         <View style={styles.areaButton}>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.buttonLogin}
             onPress={() => navigation.navigate("Feed")}
           >
             <Text style={{ fontSize: 25, textAlign: "center" }}>Entrar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={{ fontSize: 25, textAlign: "center" }}>
+          <TouchableOpacity style={styles.buttonCad}>
+            <Text style={{ fontSize: 18, textAlign: "center", color:'blue' }}>
               Cadastrar-se
             </Text>
           </TouchableOpacity>
@@ -63,13 +63,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   areaButton: { alignItems: "center" },
-  button: {
+  buttonLogin: {
     borderWidth: 1,
     borderRadius: 8,
     padding: 20,
     marginTop: 10,
     backgroundColor: "#b4d8f5",
-    width: 180,
+    
+  },
+  buttonCad: {
+    borderRadius: 8,
+    marginTop: 10,
   },
   areaImage: {
     justifyContent: "center",
