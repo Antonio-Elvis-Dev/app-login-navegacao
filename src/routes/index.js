@@ -5,6 +5,7 @@ import React from "react";
 import Home from "../pages/Home";
 import Sobre from "../pages/Sobre";
 import Login from "../pages/Login";
+import Cadastro from "../pages/Cadastro";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -28,8 +29,10 @@ export default function Routes() {
         name="Login"
         component={Login}
         options={{ headerShown: false }}
+        
       />
       <Stack.Screen name="Feed" component={Acesso} />
+      <Stack.Screen name="Cadastro" component={Cadastro}/>
     </Stack.Navigator>
   );
 }

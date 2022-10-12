@@ -11,86 +11,58 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 
-import { StatusBarHeight } from "../../config/components";
+// import { StatusBarHeight } from "../../config/components";
 
 import firebase from "../../config/firebaseConnection/firebaseConnection";
 
-console.disableYellowBox = true;
-
-
-// export default class Logout extends Component{
-  
-//   render(){
-//   return(
-  // async function sair() {
-  //   await firebase
-  //   .auth().signOut()
-  //   setEmail("")
-  //   setSenha("")
-
-  //   navigation.navigate("Login")
-
-//   }
-//   )
-// }
-// }
-
-
-export default function Login() {
+export default function Cadastro() {
   const navigation = useNavigation();
 
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [user, setUser] = useState("");
 
   async function cadastrar() {
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, senha)
       .then((value) => {
-        alert(`User criado: ${value.user.email}`);
-        setEmail(value.user.email);
+        // alert(value.user.uid)
+        firebase.database().ref('usuarios').child(value.user.uid).set({
+            nome:nome
+        })
+        alert("Usuario Criado")
+        setNome('')
+        setEmail('')
+        setSenha('')
       })
+
       .catch((error) => {
-        if (error.code === "auth/invalid-email") {
-          alert("Email invalido");
-          return;
-        } else {
-          alert("ops algo deu errado");
-          return;
-        }
+        alert("Algo deu errado");
+        return;
       });
   }
 
-  async function logar() {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, senha)
-      .then((value) => {
-        alert("Bem-vindo: " + value.user.email);
-        setUser(value.user.email)
-        navigation.navigate("Feed")
-      })
-      .catch((error)=>{
-        alert("Algo deu errado")
-        return
-      })
-    setEmail("");
-    setSenha("");
-  }
-  
-  
- 
   return (
     <View style={{ flex: 1, backgroundColor: "#7ee4db" }}>
-      <SafeAreaView style={[styles.container, { marginTop: StatusBarHeight }]}>
+      <SafeAreaView style={[styles.container]}>
         <View style={styles.areaImage}>
           <Image
             style={styles.image}
             source={require("../../assets/logo.jpg")}
           />
+          <Text style={{ fontSize: 25, textAlign: "center" }}>
+            Cadastrar-se
+          </Text>
         </View>
         <View style={styles.areaForm}>
+          <Text style={styles.texto}>Nome</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ex: Maria Joana"
+            onChangeText={(texto) => setNome(texto)}
+            value={nome}
+          />
           <Text style={styles.texto}>E-mail</Text>
           <TextInput
             style={styles.input}
@@ -104,23 +76,15 @@ export default function Login() {
             placeholder="Senha"
             onChangeText={(texto) => setSenha(texto)}
             value={senha}
+            // secureTextEntry={true}
           />
         </View>
 
         <View style={styles.areaButton}>
-          <TouchableOpacity style={styles.buttonLogin} onPress={logar}>
-            <Text style={{ fontSize: 25, textAlign: "center" }}>Entrar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonCad}>
-            <Text
-              style={{ fontSize: 18, textAlign: "center", color: "blue" }}
-              onPress={()=>navigation.navigate("Cadastro")}
-            >
-              Cadastrar-se
-            </Text>
+          <TouchableOpacity style={styles.buttonLogin} onPress={cadastrar}>
+            <Text style={{ fontSize: 25, textAlign: "center" }}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
-        
       </SafeAreaView>
     </View>
   );
@@ -134,7 +98,6 @@ const styles = StyleSheet.create({
   areaForm: {
     justifyContent: "center",
     alignItems: "center",
-    
   },
   areaButton: { alignItems: "center" },
   buttonLogin: {
@@ -154,10 +117,10 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 100,
-    marginTop: "20%",
+    marginTop: "10%",
   },
   texto: {
-    fontSize: 25,
+    fontSize: 20,
     alignSelf: "flex-start",
     marginStart: "10%",
   },
