@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,25 @@ import { StatusBarHeight } from "../../config/components";
 import firebase from "../../config/firebaseConnection/firebaseConnection";
 
 console.disableYellowBox = true;
+
+
+// export default class Logout extends Component{
+  
+//   render(){
+//   return(
+  // async function sair() {
+  //   await firebase
+  //   .auth().signOut()
+  //   setEmail("")
+  //   setSenha("")
+
+  //   navigation.navigate("Login")
+
+//   }
+//   )
+// }
+// }
+
 
 export default function Login() {
   const navigation = useNavigation();
@@ -59,14 +78,9 @@ export default function Login() {
     setEmail("");
     setSenha("");
   }
-
-  async function sair() {
-    await firebase
-    .auth().signOut()
-    setUser("")
-    setSenha("")
-  }
-
+  
+  
+ 
   return (
     <View style={{ flex: 1, backgroundColor: "#7ee4db" }}>
       <SafeAreaView style={[styles.container, { marginTop: StatusBarHeight }]}>
@@ -106,6 +120,7 @@ export default function Login() {
             </Text>
           </TouchableOpacity>
         </View>
+        
       </SafeAreaView>
     </View>
   );
